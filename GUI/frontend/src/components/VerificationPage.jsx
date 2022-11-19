@@ -1,9 +1,9 @@
-import FileUploader from "./FileUploader";
+import PropertyList from "./PropertyList";
 
 function VerificationPage() {
   return (
     <div>
-      <FileUploader></FileUploader>
+      <PropertyList></PropertyList>
     </div>
   );
 }
