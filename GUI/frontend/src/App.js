@@ -1,6 +1,6 @@
-import './App.css';
-import VerificationPage from './components/VerificationPage';
-import ButtonAppBar from './components/AppBar';
+import "./App.css";
+import VerificationPage from "./components/VerificationPage";
+import ButtonAppBar from "./components/AppBar";
 
 function App() {
   return (
