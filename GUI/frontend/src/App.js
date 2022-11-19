@@ -1,9 +1,12 @@
 import './App.css';
+import VerificationPage from './components/VerificationPage';
+import ButtonAppBar from './components/AppBar';
 
 function App() {
   return (
     <div className="App">
-      <p>kotas</p>
+      <ButtonAppBar></ButtonAppBar>
+      <VerificationPage></VerificationPage>
     </div>
   );
 }

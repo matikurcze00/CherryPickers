@@ -1,0 +1,22 @@
+POST file to check
+---
+tags:
+- Puh File
+parameters:
+  - name: file
+    in: formData
+    description: file
+    required: true
+    type: file
+
+responses:
+  200:
+    schema:
+      type: string
+      example: "File: {file_name} added successfully"
+  400:
+    $ref: '#/components/responses/400BadRequest'
+  403:
+    $ref: '#/components/responses/403Forbidden'
+  404:
+    $ref: '#/components/responses/404NotFound'
