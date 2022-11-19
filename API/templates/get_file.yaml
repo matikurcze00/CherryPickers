@@ -1,0 +1,22 @@
+GET file
+---
+tags:
+- Puh File
+parameters:
+  - name: uuid
+    in: path
+    description: uuid
+    required: true
+    type: string
+
+responses:
+  200:
+    schema:
+      type: file
+      example: "File checked and updated"
+  400:
+    $ref: '#/components/responses/400BadRequest'
+  403:
+    $ref: '#/components/responses/403Forbidden'
+  404:
+    $ref: '#/components/responses/404NotFound'
