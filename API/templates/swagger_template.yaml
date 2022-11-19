@@ -1,0 +1,55 @@
+---
+openapi: 2.0.0
+info:
+  version: 0.3.0
+  title: Cherry Pickers
+
+components:
+  responses:
+    # 200
+    SuccessfulLogin:
+      description: Successful login response
+      schema:
+        type: string
+        example: Login Successful
+
+    # 200
+    SuccessfulLogout:
+      description: Successful logout response
+      schema:
+        type: string
+        example: Logout Successful
+
+#    # 202
+#    ReturnUuidResponse:
+#      description: Started handler execution
+#      schema:
+#        $ref: '#/components/schemas/Uuid'
+
+    # 201
+    201ResourceCreated:
+      description: Created requested resource
+
+    # 400
+    400BadRequest:
+      description: Request missing required field or malformed
+
+    #401
+    401Unauthorized:
+      description: Not Authenticated
+
+    # 403
+    403Forbidden:
+      description: Not Authorized
+
+    # 404
+    404NotFound:
+      description: Resource not found
+
+    # 409
+    409Conflict:
+      description: Conflict
+
+    # 500
+    500InternalServerError:
+      description: Internal server error

@@ -1,0 +1,14 @@
+Hello world
+---
+tags:
+- Greetings
+
+responses:
+  200:
+    description: hello world
+  400:
+    $ref: '#/components/responses/400BadRequest'
+  403:
+    $ref: '#/components/responses/403Forbidden'
+  404:
+    $ref: '#/components/responses/404NotFound'
