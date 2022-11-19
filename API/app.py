@@ -53,7 +53,11 @@ def post_file():
 @app.route('/file/<string:uuid>', methods=['GET'])
 @swag_from('templates/get_file.yaml')
 def get_file(uuid: str):
-    return send_file(f"{uuid}.pdf", mimetype="pdf", as_attachment=True)
+    return send_file(f"pdfs/{uuid}.pdf", mimetype="pdf", as_attachment=True)
+
+
+def run_api(debug: bool):
+    app.run(debug=True)
 
 
 if __name__ == '__main__':
