@@ -12,13 +12,16 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
+import PropertyList from "./PropertyList.jsx";
 
 export const VerificationPage = () => {
   const [files, setFiles] = useState([]);
   const [pdfChanges, setPdfChanges] = useState([]);
 
   return (
+    <Grid container>
     <Container maxWidth="sm">
+      <Grid item>
       <Box margin={5} width="500">
         <Uploader setFiles={setFiles} files={files}></Uploader>
       </Box>
@@ -31,7 +34,15 @@ export const VerificationPage = () => {
           {files.map((file) => { return <Item>{file.name}</Item>})}
         </Stack>
       </Box>
+      </Grid>
     </Container>
+      <Grid item>
+        <PropertyList>
+
+        </PropertyList>
+      </Grid>
+    </Grid>
+
   );
 };
 
