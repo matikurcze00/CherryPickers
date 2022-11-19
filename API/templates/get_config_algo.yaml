@@ -1,0 +1,25 @@
+GET algo config
+---
+tags:
+- Puh config
+
+responses:
+  200:
+    schema:
+      type: object
+      properties:
+        sender:
+          type: object
+        receiver:
+          type: object
+        service_type":
+          type: object
+        pdf_parameters:
+          type: object
+
+  400:
+    $ref: '#/components/responses/400BadRequest'
+  403:
+    $ref: '#/components/responses/403Forbidden'
+  404:
+    $ref: '#/components/responses/404NotFound'

@@ -1,9 +1,9 @@
 import codecs
 from uuid import uuid4
 
-from config import cf
+from config import cf, cf_algo
 
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, redirect
 from flasgger import Swagger
 from flasgger import swag_from
 from PyPDF2 import PdfFileReader, PdfWriter
@@ -19,6 +19,11 @@ def encode_file_bytes(payload: bytes) -> str:
 
 def decode_file_string(payload: str) -> bytes:
     return codecs.decode(codecs.encode(payload, 'utf-8'), 'base64')
+
+
+@app.route('/', methods=['GET'])
+def apidocs():  # put application's code here
+    return redirect('/apidocs')
 
 
 @app.route('/hello_world', methods=['GET'])
@@ -57,8 +62,15 @@ def get_file(uuid: str):
     return send_file(f"pdfs/{uuid}.pdf", mimetype="pdf", as_attachment=True)
 
 
-def run_api(debug: bool, path_to_config: str):
+@app.route('/config_algo', methods=['GET'])
+@swag_from('templates/get_config_algo.yaml')
+def get_config_algo():
+    return cf_algo.to_dict()
+
+
+def run_api(debug: bool, path_to_config: str, path_to_algo_config):
     cf.load_config(path_to_config)
+    cf_algo.load_config(path_to_algo_config)
     app.run(debug=debug, host=cf.ip_address, port=cf.port)
 
 
