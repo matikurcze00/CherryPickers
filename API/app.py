@@ -29,14 +29,14 @@ def hello_world():  # put application's code here
 @swag_from('templates/post_file.yaml')
 def post_file():
     if 'file' not in request.files:
-        return "dupa blada"
+        return 400, "Request missing required field or malformed"
 
     file = request.files['file']
     pdf_file = PdfFileReader(file)
     pages = [pdf_file.getPage(page_num) for page_num in range(pdf_file.numPages)]
     print(pages)
 
-    return f"{file.filename} uploaded successfully"
+    return 200, f"{file.filename} uploaded successfully"
 
 
 if __name__ == '__main__':
