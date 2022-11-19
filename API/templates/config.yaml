@@ -1,4 +1,4 @@
-reciever:
+receiver:
   name :
     min_char : 0
     max_char : 50
@@ -7,7 +7,7 @@ reciever:
   last_name :
     min_char : 0
     max_char : 100
-    all_alloved : true
+    all_allowed : true
     letters_allowed : true
     numbers_allowed : true
   street :
@@ -77,7 +77,7 @@ sender:
   last_name :
     min_char : 0
     max_char : 100
-    all_alloved : true
+    all_allowed : true
     letters_allowed : true
     numbers_allowed : true
   street :
@@ -138,7 +138,7 @@ sender:
     letters_allowed : true
     numbers_allowed : true
 
-service_type : przesyłka rejestrowana
+service_type : przesylka rejestrowana
 
 pdf_parameters :
   format : A4
@@ -174,8 +174,8 @@ pdf_parameters :
       - "}"
     no_spaces_around : true
     encoding : UTF-8
-  generating : composit
-  optimalization : true
+  generating : composite
+  optimization : true
   fonts_in_doc : true
   one_color :
     one_element_style_points : 5
@@ -185,8 +185,8 @@ pdf_parameters :
     two_element_style_points : 10
   min_line_width : 0.1
   min_multi_color_line_width : 0.5
-  fomrms_allowed : false
-  collor_space : CMYK
+  forms_allowed : false
+  color_space : CMYK
   black_overprint : true
   images :
     min_resolution_in_DPI : 150

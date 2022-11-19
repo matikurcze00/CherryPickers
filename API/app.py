@@ -1,10 +1,11 @@
 import codecs
 from uuid import uuid4
 
+from config import cf
+
 from flask import Flask, request, send_file
 from flasgger import Swagger
 from flasgger import swag_from
-
 from PyPDF2 import PdfFileReader, PdfWriter
 
 app = Flask(__name__)
@@ -56,8 +57,9 @@ def get_file(uuid: str):
     return send_file(f"pdfs/{uuid}.pdf", mimetype="pdf", as_attachment=True)
 
 
-def run_api(debug: bool):
-    app.run(debug=debug)
+def run_api(debug: bool, path_to_config: str):
+    cf.load_config(path_to_config)
+    app.run(debug=debug, host=cf.ip_address, port=cf.port)
 
 
 if __name__ == '__main__':
