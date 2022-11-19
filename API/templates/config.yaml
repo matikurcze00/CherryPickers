@@ -182,7 +182,7 @@ pdf_parameters :
     dwo_element_style_points : 6
   more_than_one_color :
     one_element_style_points : 8
-    dwo_element_style_points : 10
+    two_element_style_points : 10
   min_line_width : 0.1
   min_multi_color_line_width : 0.5
   fomrms_allowed : false
