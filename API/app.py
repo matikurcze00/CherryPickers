@@ -57,7 +57,7 @@ def get_file(uuid: str):
 
 
 def run_api(debug: bool):
-    app.run(debug=True)
+    app.run(debug=debug)
 
 
 if __name__ == '__main__':
