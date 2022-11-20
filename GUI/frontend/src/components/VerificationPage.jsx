@@ -21,7 +21,7 @@ export const VerificationPage = () => {
   return (
     <Grid container>
     <Container maxWidth="sm">
-      <Grid  item xs="12">
+      <Grid  item >
         <Box margin={5} width="500">
           <Uploader setFiles={setFiles} files={files}></Uploader>
         </Box>
@@ -36,7 +36,7 @@ export const VerificationPage = () => {
       </Grid>
     </Container>
     <Container >
-      <Grid  xs="12" item margin={5}>
+      <Grid item margin={5}>
         <PropertyList>
 
         </PropertyList>
