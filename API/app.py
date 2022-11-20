@@ -1,8 +1,6 @@
 import codecs
 from uuid import uuid4
 
-from werkzeug.datastructures import FileStorage
-
 from config import cf, cf_algo
 
 from flask import Flask, request, send_file, redirect
@@ -10,7 +8,6 @@ from flask_cors import CORS
 from flasgger import Swagger
 from flasgger import swag_from
 from PyPDF2 import PdfFileReader, PdfWriter
-from docx2pdf import convert
 
 app = Flask(__name__)
 CORS(app)
@@ -24,13 +21,6 @@ def encode_file_bytes(payload: bytes) -> str:
 
 def decode_file_string(payload: str) -> bytes:
     return codecs.decode(codecs.encode(payload, 'utf-8'), 'base64')
-
-
-def covert_file_if_not_pdf(file: FileStorage) -> FileStorage:
-    if file.filename.endswith(".pdf"):
-        return file
-    elif file.filename.endswith(".docx"):
-        return convert(file)
 
 
 @app.route('/', methods=['GET'])
@@ -51,14 +41,13 @@ def post_file():
         return "Request missing required field or malformed", 400
 
     file = request.files['file']
+
     pdf_file = PdfFileReader(file)
     pages = [pdf_file.getPage(page_num) for page_num in range(pdf_file.numPages)]
-
-    uuid = uuid4()
     writer = PdfWriter()
-
     [writer.add_page(page) for page in pages]
 
+    uuid = uuid4()
     with open(f"pdfs/{uuid}.pdf", "wb") as f:
         writer.write(f)
 
@@ -78,6 +67,16 @@ def get_file(uuid: str):
 @swag_from('templates/get_config_algo.yaml')
 def get_config_algo():
     return cf_algo.to_dict()
+
+
+@app.route('/config_algo', methods=['POST'])
+@swag_from('templates/post_config_algo.yaml')
+def post_config_algo(config_dict: dict):
+    try:
+        cf_algo.upadte(config_dict=config_dict)
+        return cf_algo.to_dict(), 200
+    except Exception as e:
+        return f"fail to update config. Error: {str(e)}", 500
 
 
 def run_api(debug: bool, path_to_config: str, path_to_algo_config):

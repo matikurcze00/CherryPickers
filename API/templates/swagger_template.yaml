@@ -5,6 +5,336 @@ info:
   title: Cherry Pickers
 
 components:
+  schemas:
+    algo_config:
+      type: object
+      properties:
+        sender:
+          type: object
+          properties:
+            name:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+            last_name:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+                all_allowed:
+                  type: boolean
+            street:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+            house_number:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+                first_character_is_not_letter:
+                  type: boolean
+                allowed_characters:
+                  type: array
+                  items:
+                    type: string
+            apartment:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+            zip:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: int
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+                allowed_characters:
+                  type: array
+                  items:
+                    type: string
+                is_not_polish_zip_allowed:
+                  type: boolean
+            city:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                allowed_characters:
+                  type: array
+                  items:
+                    type: string
+            country:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+        receiver:
+          type: object
+          properties:
+            name:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+            last_name:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+            street:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+            house_number:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+                first_character_is_not_letter:
+                  type: boolean
+                allowed_characters:
+                  type: array
+                  items:
+                    type: string
+            apartment:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+            zip:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: int
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+                allowed_characters:
+                  type: array
+                  items:
+                    type: string
+                is_not_polish_zip_allowed:
+                  type: boolean
+            city:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                allowed_characters:
+                  type: array
+                  items:
+                    type: string
+            country:
+              type: object
+              properties:
+                min_char:
+                  type: integer
+                  description: Minium length of name
+                max_char:
+                  type: integer
+                  description: Maximum length of name
+                letters_allowed:
+                  type: boolean
+                numbers_allowed:
+                  type: boolean
+        service_type:
+          type: string
+        pdf_parameters:
+          type: object
+          properties:
+            format:
+              type: string
+            PDF_versions:
+              type: array
+              items:
+                type: string
+            top_margin_size_in_millimeters:
+              type: integer
+            down_margin_size_in_millimeters:
+              type: integer
+            side_margin_size_in_millimeters:
+              type: integer
+            password:
+              type: boolean
+            print:
+              type: boolean
+            edit:
+              type: boolean
+            copy:
+              type: boolean
+            change:
+              type: boolean
+            name:
+              type: object
+              properties:
+                max_length:
+                  type: integer
+                not_allowed_characters:
+                  type: array
+                  items:
+                    type: string
+                no_spaces_around:
+                  type: boolean
+                encoding:
+                  type: string
+            generating:
+              type: string
+            optimization:
+              type: boolean
+            fonts_in_doc:
+              type: boolean
+            one_color:
+              type: object
+              properties:
+                one_element_style_points:
+                  type: integer
+                two_element_style_points:
+                  type: integer
+            more_than_one_color:
+              type: object
+              properties:
+                one_element_style_points:
+                  type: integer
+                two_element_style_points:
+                  type: integer
+            min_line_width:
+              type: number
+            min_multi_color_line_width:
+              type: number
+            forms_allowed:
+              type: boolean
+            color_space:
+              type: string
+            black_overprint:
+              type: boolean
+            images:
+              type: object
+              properties:
+                min_resolution_in_DPI:
+                  type: integer
+                opt_resolution_in_DPI:
+                  type: integer
+                scale:
+                  type: string
+                bit:
+                  type: integer
+
   responses:
     # 200
     SuccessfulLogin:

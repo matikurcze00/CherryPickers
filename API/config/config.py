@@ -39,6 +39,12 @@ class ConfingAlgo:
             "pdf_parameters": self.pdf_parameters
         }
 
+    def update(self, config_dict: dict):
+        self.receiver = config_dict["receiver"]
+        self.sender = config_dict["sender"]
+        self.service_type = config_dict["service_type"]
+        self.pdf_parameters = config_dict["pdf_parameters"]
+
 
 cf = Confing()
 cf_algo = ConfingAlgo()
