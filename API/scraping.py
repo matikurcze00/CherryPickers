@@ -1,6 +1,6 @@
 # extract_doc_info.py
 from werkzeug.datastructures import FileStorage
-
+import os
 # spacy, ner, hugging face
 
 from utils import PdfField
@@ -71,24 +71,29 @@ def extract_information(pdf_file_reader: PdfFileReader):
             meta_data[PdfField.DEPARTMENT] += line
         else:
             break
-
-    meta_data[PdfField.UNP] = ""
-    while True:
-        line_index += 1
-        line = sourcefile_lines[line_index]
-        if line.find("UNP:") >= 0:
-            for word in line[line.find("UNP:") + 4:]:
-                meta_data[PdfField.UNP] += word
-            break
+    meta_data[PdfField.DATE] = line.split(",")[1]
     line_index += 1
     line = sourcefile_lines[line_index]
-    if line.find("Sprawa:") >= 0:
+    meta_data[PdfField.UNP] = ""
+    while(True):
+        if(line.find("UNP:")>=0):
+            for word in line[line.find("UNP:") + 4:]:
+                meta_data[PdfField.UNP] += word 
+            line_index += 1
+            line = sourcefile_lines[line_index]
+            break 
+        line_index += 1
+        line = sourcefile_lines[line_index]
+
+    if(line.find("Sprawa:")>=0):
         meta_data[PdfField.CASE_TYPE] = ""
         for word in line[line.find("Sprawa:") + 7:]:
-            meta_data[PdfField.CASE_TYPE] += word
+                meta_data[PdfField.CASE_TYPE] += word 
         line_index += 1
-    while True:
-        if line.strip() == "":
+        line = sourcefile_lines[line_index]
+
+    while(True):
+        if(line.strip()==""):
             line_index += 1
             break
         line_index += 1
@@ -104,12 +109,12 @@ def extract_information(pdf_file_reader: PdfFileReader):
     for word in line.split()[1:]:
         meta_data[PdfField.RECEIVER_CITY] += word
 
-    print(meta_data)
-    return meta_data
+    return meta_data 
+
 
 
 def parse_file(file: FileStorage) -> None:
-    pdfFileReader: Optional[PdfFileReader] = PdfFileReader(file)
+    # pdfFileReader: Optional[PdfFileReader] = PdfFileReader(file)
 
     if not is_pdf(pdfFileReader):
         print("Given file is not valid pdf file")
@@ -122,18 +127,40 @@ def get_configuration(path: str) -> dict:
     with open(path, 'rb') as f:
         return safe_load(f)
 
+def get_signature(path: str) ->str:
+    f = open(path, 'rb')
+    pdfFileReader = PdfFileReader(f)
+    text = pdfFileReader.getPage(pdfFileReader.numPages-1).extract_text()
+    sourcefile_lines = []
+    for ind, line in enumerate(text.splitlines()):
+        if(line.find("(podpisano kwalifikowanym podpisem elektronicznym)")>=0 or
+         (line.find("(podpisano kwalifikowanym")>=0 and text.splitlines()[ind+1].find("podpisem elektronicznym)")>=0)):
+            return sourcefile_lines.pop()
+        sourcefile_lines.append(line)
+    return ""
+
+def strip_values(dict : any):
+    for key, value in parsed_data.items():
+        parsed_data[key] = value.strip()
+
+def change_pdf_name(old_path:str ,new_path: str) -> str:
+    os.rename(old_path, new_path)
+    return new_path
 
 if __name__ == '__main__':
     path_to_pdf = 'send_hybrid_gov_01~.pdf'
     path_to_nothing = 'send_hybrid_gov_012~.pdf'
     path_to_config = 'config_algo.yaml'
+    yaml_config = get_configuration(path_to_config)
+    validator: Validator = Validator(yaml_config)
+    
     f = open(path_to_pdf, 'rb')
     pdfFileReader = PdfFileReader(f)
     page = pdfFileReader.getPage(0)
     parsed_data = parse_file(pdfFileReader)
-    print(f"Parsed data:\n {type(parsed_data)}")
+    parsed_data[PdfField.SIGNATURE] = get_signature(path_to_pdf)
+    print(parsed_data)
 
-    yaml_config = get_configuration(path_to_config)
-    validator: Validator = Validator(yaml_config)
+    
     errors = validator.validate(parsed_data)
     # TODO: errors ma być zwracane przez api

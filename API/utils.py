@@ -16,3 +16,5 @@ class PdfField(Enum):
     RECEIVER_STREET = 13
     RECEIVER_ZIP_CODE = 14
     RECEIVER_CITY = 15
+    DATE = 16
+    SIGNATURE = 17
