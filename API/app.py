@@ -76,9 +76,10 @@ def get_config_algo():
 
 @app.route('/config_algo', methods=['POST'])
 @swag_from('templates/post_config_algo.yaml')
-def post_config_algo(config_dict: dict):
+def post_config_algo():
     try:
-        cf_algo.upadte(config_dict=config_dict)
+        data = request.get_json()
+        cf_algo.update(config_dict=data["config_dict"])
         return cf_algo.to_dict(), 200
     except Exception as e:
         return f"fail to update config. Error: {str(e)}", 500
