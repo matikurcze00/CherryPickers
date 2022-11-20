@@ -49,7 +49,7 @@ export const VerificationPage = () => {
               divider={<Divider orientation="vertical" flexItem />}
               spacing={1}
             >
-              {files.map((file) => {
+              {filesToShow.map((file) => {
                 return (
                   <Item>
                     {file.name}
