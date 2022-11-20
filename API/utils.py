@@ -1,0 +1,18 @@
+from enum import Enum
+
+class PdfField(Enum):
+    SENDER_EMAIL = 1
+    SENDER_EPUAP = 2
+    SENDER_NAME = 3
+    SENDER_STREET = 4
+    SENDER_ZIP_CODE = 5
+    SENDER_CITY = 6
+    DEPARTMENT = 7
+    UNP = 8
+    CASE_TYPE = 9
+    RECEIVER_EMAIL = 10
+    RECEIVER_EPUAP = 11
+    RECEIVER_NAME = 12
+    RECEIVER_STREET = 13
+    RECEIVER_ZIP_CODE = 14
+    RECEIVER_CITY = 15

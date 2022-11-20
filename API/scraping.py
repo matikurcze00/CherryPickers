@@ -125,7 +125,8 @@ if __name__ == '__main__':
     page = pdfFileReader.getPage(0)
     parsed_data = parse_file(path_to_pdf)
     print(f"Parsed data:\n {type(parsed_data)}")
-    # parse_file(path_to_nothing) #Nie dziala dla zlego pliku
+
     yaml_config = get_configuration(path_to_config)
     validator: Validator = Validator(yaml_config)
-    validator.validate(parsed_data)
+    errors = validator.validate(parsed_data)
+    # TODO: errors ma być zwracane przez api
