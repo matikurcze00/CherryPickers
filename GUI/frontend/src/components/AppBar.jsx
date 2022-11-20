@@ -46,12 +46,17 @@ function ButtonAppBar() {
               </LoginComponent>
             <Box sx={{ flexGrow: 0.1 }}>
               <Grid spacing={2} container>
+              <Grid xs="4" item>
+                  <Button onClick={onButtonClick} variant="outlined" color="inherit">
+                    Recents
+                  </Button>
+                  </Grid>
                 <Grid xs="4" item>
                   <Button onClick={onButtonClick} variant="outlined" color="inherit">
                     Logging in
                   </Button>
                 </Grid>
-                <Grid xs="8" item>
+                <Grid xs="4" item>
                   <Button disabled variant="outlined" color="secondary">
                     Export Configuration
                   </Button>
