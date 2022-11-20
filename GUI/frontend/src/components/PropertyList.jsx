@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 
 export const PropertyList = (props) => {
   let properties = [
-    { font: "modified" },
+    { font: "valid" },
     { fontSize: "valid" },
     { images: "incorrect" },
   ];

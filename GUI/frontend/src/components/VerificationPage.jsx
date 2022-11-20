@@ -32,7 +32,9 @@ export const VerificationPage = () => {
     setFiles(files.filter((element) => element !== files[e.target.id]));
   };
   let filesToShow = tabEnabled ? files : recents
-
+  const onShowProperty = () => {
+    console.log('mati debil')
+  }
 
   return (
     <Grid container>
@@ -51,7 +53,7 @@ export const VerificationPage = () => {
             >
               {filesToShow.map((file) => {
                 return (
-                  <Item>
+                  <Item onClick={onShowProperty}>
                     {file.name}
                     {tabEnabled &&
                     <Button
