@@ -44,7 +44,7 @@ export const VerificationPage = () => {
             <Uploader setFiles={setFiles} files={files}></Uploader>
           </Box>}
           <Box>
-            <Stack
+            <Stack margin={5}
               alignItems="center"
               divider={<Divider orientation="vertical" flexItem />}
               spacing={1}
@@ -60,6 +60,7 @@ export const VerificationPage = () => {
                       id={files.findIndex((x) => x === file)}
                       onClick={(e) => deleteFile(e)}
                       variant="outlined"
+
                     >
                       Delete
                     </Button>}
