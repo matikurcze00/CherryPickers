@@ -4,20 +4,18 @@ import os
 # spacy, ner, hugging face
 
 from utils import PdfField
-
+import os
 from enum import Enum
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfFileReader, PdfFileWriter
 from PyPDF2.errors import PdfReadError
 from typing import Optional
 from validation import Validator
 from yaml import safe_load
 
-
 def get_pdf_text_from_page(pdf_file_reader: PdfFileReader, page_number: int) -> str:
     page = pdf_file_reader.getPage(page_number)
 
     return page.extractText()
-
 
 def open_file(pdf_path: str) -> Optional[PdfFileReader]:
     try:
@@ -27,13 +25,11 @@ def open_file(pdf_path: str) -> Optional[PdfFileReader]:
     except PdfReadError as e:
         return None
 
-
 def is_pdf(pdf_file_reader: Optional[PdfFileReader]) -> bool:
-    return pdf_file_reader is not None
+    return pdf_file_reader != None
 
 
 def extract_information(pdf_file_reader: PdfFileReader):
-    print(type(pdf_file_reader))
 
     START_PAGE = 0
     text = get_pdf_text_from_page(pdf_file_reader, START_PAGE)
@@ -48,7 +44,7 @@ def extract_information(pdf_file_reader: PdfFileReader):
         sourcefile_lines.append(line)
     for line in sourcefile_lines:
         for word in line.split(" "):
-            if word == "e-mail:":
+            if(word == "e-mail:"):
                 index = word.find("e-mail")
                 meta_data[PdfField.SENDER_EMAIL] = line.split()[index + 1]
                 meta_data[PdfField.SENDER_EPUAP] = line.split()[index + 4]
@@ -61,13 +57,13 @@ def extract_information(pdf_file_reader: PdfFileReader):
     meta_data[PdfField.SENDER_STREET] = line.split(" ,")[1]
     meta_data[PdfField.SENDER_ZIP_CODE] = line.split(" , ")[2].split()[0]
     meta_data[PdfField.SENDER_CITY] = line.split(" , ")[2].split()[1]
-    meta_data[PdfField.DEPARTMENT] = ""
+    meta_data[PdfField.DEPARTMENT]= ""
     for word in line.split(" , ")[2].split()[2:]:
         meta_data[PdfField.DEPARTMENT] += word
-    while True:
+    while(True):
         line_index += 1
         line = sourcefile_lines[line_index]
-        if line.find(",") < 0:
+        if(line.find(",") < 0):
             meta_data[PdfField.DEPARTMENT] += line
         else:
             break
@@ -111,17 +107,14 @@ def extract_information(pdf_file_reader: PdfFileReader):
 
     return meta_data 
 
+def parse_file(path: str) -> None:
+    pdfFileReader: Optional[PdfFileReader] = open_file(path)
 
-
-def parse_file(file: FileStorage) -> None:
-    # pdfFileReader: Optional[PdfFileReader] = PdfFileReader(file)
-
-    if not is_pdf(pdfFileReader):
+    if (not is_pdf(pdfFileReader)):
         print("Given file is not valid pdf file")
         return
-
+    
     return extract_information(pdfFileReader)
-
 
 def get_configuration(path: str) -> dict:
     with open(path, 'rb') as f:
@@ -147,7 +140,15 @@ def change_pdf_name(old_path:str ,new_path: str) -> str:
     os.rename(old_path, new_path)
     return new_path
 
+def strip_values(dict : any):
+    for key, value in parsed_data.items():
+        parsed_data[key] = value.strip()
+
+def change_pdf_name(old_path:str ,new_path: str) -> str:
+    os.rename(old_path, new_path)
+    return new_path
 if __name__ == '__main__':
+    # inputy
     path_to_pdf = 'send_hybrid_gov_01~.pdf'
     path_to_nothing = 'send_hybrid_gov_012~.pdf'
     path_to_config = 'config_algo.yaml'
@@ -157,10 +158,23 @@ if __name__ == '__main__':
     f = open(path_to_pdf, 'rb')
     pdfFileReader = PdfFileReader(f)
     page = pdfFileReader.getPage(0)
-    parsed_data = parse_file(pdfFileReader)
-    parsed_data[PdfField.SIGNATURE] = get_signature(path_to_pdf)
-    print(parsed_data)
-
     
-    errors = validator.validate(parsed_data)
-    # TODO: errors ma być zwracane przez api
+    #kod funkcji
+    yaml_config = get_configuration(path_to_config)
+    validator: Validator = Validator(yaml_config)
+    errors = dict
+    if (path_to_pdf!=validator.validateName(path_to_pdf)):
+        path_to_pdf = change_pdf_name(path_to_pdf,validator.validateName(path_to_pdf))
+    parsed_data = parse_file(f)
+    parsed_data[PdfField.SIGNATURE] = get_signature(path_to_pdf)
+    strip_values(parsed_data)
+    
+    errors = validator.validateMetaData(parsed_data)
+
+    if(len(errors)==0):
+        # return ok
+        print("Ok")
+    else:
+        #return errors(errors)
+        print("nie ok")
+    # TODO: Stan czy jest error + errors ma być zwracane przez api
