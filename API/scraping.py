@@ -130,7 +130,7 @@ if __name__ == '__main__':
     f = open(path_to_pdf, 'rb')
     pdfFileReader = PdfFileReader(f)
     page = pdfFileReader.getPage(0)
-    parsed_data = parse_file(pdfFileReader)
+    parsed_data = parse_file(f)
     print(f"Parsed data:\n {type(parsed_data)}")
 
     yaml_config = get_configuration(path_to_config)
