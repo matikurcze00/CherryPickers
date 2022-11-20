@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from config import cf, cf_algo
 from validation import Validator
-from scraping import parse_file
+from scraping import parse_file, change_pdf_name, get_signature
 
 from flask import Flask, request, send_file, redirect
 from flask_cors import CORS
@@ -46,7 +46,13 @@ def post_file():
 
     try:
         valid = Validator(cf_algo.to_dict())
-        errors_dict = valid.validate(parsed_dict=parse_file(file))
+        valid_name = valid.validateName(file.filename)
+        if file.filename != valid_name:
+            file.filename = change_pdf_name(file.filename, valid_name)
+        parse_data = parse_file(file)
+        errors_dict = valid.validateMetaData(parsed_dict=parse_data)
+        parse_data = {enum.name: value for enum, value in parse_data.items()}
+        parse_data["SIGNATURE"] = get_signature(file)
     except Exception as e:
         return f"Fail to validate file Error: {str(e)}", 500
 
@@ -58,12 +64,16 @@ def post_file():
     uuid = uuid4()
     with open(f"pdfs/{uuid}.pdf", "wb") as f:
         writer.write(f)
-
-    return {
-        "info": f"{file.filename} uploaded successfully",
+    ret = {
+        "info": f"{valid_name} uploaded successfully",
         "uuid": f"{str(uuid)}",
-        "errors": errors_dict
+        "errors": errors_dict,
+        "parse_data": parse_data
     }
+
+    print(ret)
+    return ret
+
 
 
 @app.route('/file/<string:uuid>', methods=['GET'])

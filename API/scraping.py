@@ -107,22 +107,22 @@ def extract_information(pdf_file_reader: PdfFileReader):
 
     return meta_data 
 
-def parse_file(path: str) -> None:
-    pdfFileReader: Optional[PdfFileReader] = open_file(path)
+def parse_file(file: FileStorage):
+    pdfFileReader: Optional[PdfFileReader] = PdfFileReader(file)
 
     if (not is_pdf(pdfFileReader)):
         print("Given file is not valid pdf file")
         return
-    
-    return extract_information(pdfFileReader)
+    re = extract_information(pdfFileReader)
+    print(re)
+    return re
 
 def get_configuration(path: str) -> dict:
     with open(path, 'rb') as f:
         return safe_load(f)
 
-def get_signature(path: str) ->str:
-    f = open(path, 'rb')
-    pdfFileReader = PdfFileReader(f)
+def get_signature(file: FileStorage) ->str:
+    pdfFileReader = PdfFileReader(file)
     text = pdfFileReader.getPage(pdfFileReader.numPages-1).extract_text()
     sourcefile_lines = []
     for ind, line in enumerate(text.splitlines()):
@@ -166,7 +166,7 @@ if __name__ == '__main__':
     if (path_to_pdf!=validator.validateName(path_to_pdf)):
         path_to_pdf = change_pdf_name(path_to_pdf,validator.validateName(path_to_pdf))
     parsed_data = parse_file(f)
-    parsed_data[PdfField.SIGNATURE] = get_signature(path_to_pdf)
+    parsed_data[PdfField.SIGNATURE] = get_signature(f)
     strip_values(parsed_data)
     
     errors = validator.validateMetaData(parsed_data)

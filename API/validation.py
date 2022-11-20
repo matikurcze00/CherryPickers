@@ -70,7 +70,7 @@ class Validator:
         print(errors)
         return errors
 
-def validateName(self, name) -> str:
+    def validateName(self, name) -> str:
         if (len(name)>self.config["pdf_parameters"]["name"]["max_length"]):
             name=name[0:self.config["pdf_parameters"]["name"]["max_length"]-4]+".pdf"
             if(name.find("..")):
@@ -78,7 +78,7 @@ def validateName(self, name) -> str:
 
         for sign in self.config["pdf_parameters"]["name"]["not_allowed_characters"]:
             name.replace(sign,"")
-            
+
         if(self.config["pdf_parameters"]["name"]["no_spaces_around"]):
             name = name.replace(".pdf","")
             name = name.strip()
