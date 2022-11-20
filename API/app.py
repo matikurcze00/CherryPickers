@@ -6,12 +6,14 @@ from werkzeug.datastructures import FileStorage
 from config import cf, cf_algo
 
 from flask import Flask, request, send_file, redirect
+from flask_cors import CORS
 from flasgger import Swagger
 from flasgger import swag_from
 from PyPDF2 import PdfFileReader, PdfWriter
 from docx2pdf import convert
 
 app = Flask(__name__)
+CORS(app)
 
 swagger = Swagger(app=app, template_file='templates/swagger_template.yaml')
 
