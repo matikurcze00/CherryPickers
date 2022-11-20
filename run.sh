@@ -7,9 +7,5 @@ python3 run.py
 cd ..
 
 # run frontend
-npm install -g npm
-npm install @mui/material @emotion/react @emotion/styled
-npm install @mui/icons-material
-npm install axios
 cd GUI/frontend
 npm start
