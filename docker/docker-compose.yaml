@@ -1,0 +1,27 @@
+version: "3.2"
+services:
+
+  redis:
+    image: redis
+    container_name: 'redis'
+    ports:
+      - 6379:6379
+    networks:
+      - hackyeah
+
+  backend:
+    image: jan0bb/api_cp:latest
+    container_name: 'backend'
+    volumes:
+      - ./backend/config_app.yaml:/app/config_app.yaml
+      - ./backend/config_algo.yaml:/app/config_algo.yaml
+    ports:
+      - 5000:5000
+    networks:
+      - hackyeah
+
+networks:
+  hackyeah:
+    driver: bridge
+  minikube:
+    external: true

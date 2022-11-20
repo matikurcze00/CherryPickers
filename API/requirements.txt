@@ -4,3 +4,4 @@ flasgger~=0.9.5
 PyPDF2~=2.11.1
 docx2pdf~=0.1.8
 PyYAML~=6.0
+flask-cors~=3.0.10

@@ -1,0 +1,195 @@
+receiver:
+  name :
+    min_char : 0
+    max_char : 50
+    letters_allowed : true
+    numbers_allowed : true
+  last_name :
+    min_char : 0
+    max_char : 100
+    all_allowed : true
+    letters_allowed : true
+    numbers_allowed : true
+  street :
+    min_char : 0
+    max_char : 35
+    letters_allowed : true
+    numbers_allowed : true
+  house_number :
+    min_char : 0
+    max_char : 10
+    letters_allowed : true
+    numbers_allowed : true
+    allowed_characters :
+      - /
+    first_character_is_not_letter : true
+  apartment :
+    min_char : 0
+    max_char : 10
+    letters_allowed : true
+    numbers_allowed : true
+  zip :
+    min_char : 0
+    max_char : 20
+    letters_allowed : true
+    numbers_allowed : true
+    allowed_characters :
+      - "-"
+    is_not_polish_zip_allowed : true
+  city :
+    min_char : 0
+    max_char : 30
+    letters_allowed : true
+    allowed_characters :
+      - "."
+      - ","
+      - ":"
+      - ";"
+      - "!"
+      - "..."
+      - "-"
+      - "("
+      - ")"
+      - "["
+      - "]"
+      - "{"
+      - "}"
+      - "<"
+      - ">"
+      - '"'
+      - "„"
+      - "‘"
+      - "’"
+      - "«"
+      - "»"
+  country :
+    min_char : 0
+    max_char : 30
+    letters_allowed : true
+    numbers_allowed : true
+
+sender:
+  name :
+    min_char : 0
+    max_char : 50
+    letters_allowed : true
+    numbers_allowed : true
+  last_name :
+    min_char : 0
+    max_char : 100
+    all_allowed : true
+    letters_allowed : true
+    numbers_allowed : true
+  street :
+    min_char : 0
+    max_char : 35
+    letters_allowed : true
+    numbers_allowed : true
+  house_number :
+    min_char : 0
+    max_char : 10
+    letters_allowed : true
+    numbers_allowed : true
+    allowed_characters :
+      - /
+    first_character_is_not_letter : true
+  apartment :
+    min_char : 0
+    max_char : 10
+    letters_allowed : true
+    numbers_allowed : true
+  zip :
+    min_char : 6
+    max_char : 6
+    letters_allowed : false
+    numbers_allowed : true
+    allowed_characters :
+      - "-"
+    is_not_polish_zip_allowed : false
+  city :
+    min_char : 0
+    max_char : 30
+    letters_allowed : true
+    allowed_characters :
+      - "."
+      - ","
+      - ":"
+      - ";"
+      - "!"
+      - "..."
+      - "-"
+      - "("
+      - ")"
+      - "["
+      - "]"
+      - "{"
+      - "}"
+      - "<"
+      - ">"
+      - "\""
+      - "„"
+      - "‘"
+      - "’"
+      - "«"
+      - "»"
+  country :
+    min_char : 0
+    max_char : 30
+    letters_allowed : true
+    numbers_allowed : true
+
+service_type : przesylka rejestrowana
+
+pdf_parameters :
+  format : A4
+  PDF_versions :
+    - A-2
+    - A-4
+  top_margin_size_in_millimeters : 10
+  down_margin_size_in_millimeters : 8
+  side_margin_size_in_millimeters : 15
+  password : false
+  print : true
+  edit : true
+  copy : true
+  change : true
+  name :
+    max_length : 255
+    not_allowed_characters :
+      - "~"
+      - '"'
+      - "#"
+      - "%"
+      - "&"
+      - "*"
+      - ":"
+      - "<"
+      - ">"
+      - "?"
+      - "!"
+      - "/"
+      - '\'
+      - "{"
+      - "|"
+      - "}"
+    no_spaces_around : true
+    encoding : UTF-8
+  generating : composite
+  optimization : true
+  fonts_in_doc : true
+  one_color :
+    one_element_style_points : 5
+    dwo_element_style_points : 6
+  more_than_one_color :
+    one_element_style_points : 8
+    two_element_style_points : 10
+  min_line_width : 0.1
+  min_multi_color_line_width : 0.5
+  forms_allowed : false
+  color_space : CMYK
+  black_overprint : true
+  images :
+    min_resolution_in_DPI : 150
+    opt_resolution_in_DPI : 300
+    scale : "1:1"
+    bit : 8

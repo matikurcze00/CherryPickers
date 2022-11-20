@@ -11,10 +11,12 @@ from typing import Optional
 from validation import Validator
 from yaml import safe_load
 
+
 def get_pdf_text_from_page(pdf_file_reader: PdfFileReader, page_number: int) -> str:
     page = pdf_file_reader.getPage(page_number)
 
     return page.extractText()
+
 
 def open_file(pdf_path: str) -> Optional[PdfFileReader]:
     try:
@@ -24,8 +26,9 @@ def open_file(pdf_path: str) -> Optional[PdfFileReader]:
     except PdfReadError as e:
         return None
 
+
 def is_pdf(pdf_file_reader: Optional[PdfFileReader]) -> bool:
-    return pdf_file_reader != None
+    return pdf_file_reader is not None
 
 
 def extract_information(pdf_file_reader: PdfFileReader):
@@ -44,7 +47,7 @@ def extract_information(pdf_file_reader: PdfFileReader):
         sourcefile_lines.append(line)
     for line in sourcefile_lines:
         for word in line.split(" "):
-            if(word == "e-mail:"):
+            if word == "e-mail:":
                 index = word.find("e-mail")
                 meta_data[PdfField.SENDER_EMAIL] = line.split()[index + 1]
                 meta_data[PdfField.SENDER_EPUAP] = line.split()[index + 4]
@@ -57,34 +60,34 @@ def extract_information(pdf_file_reader: PdfFileReader):
     meta_data[PdfField.SENDER_STREET] = line.split(" ,")[1]
     meta_data[PdfField.SENDER_ZIP_CODE] = line.split(" , ")[2].split()[0]
     meta_data[PdfField.SENDER_CITY] = line.split(" , ")[2].split()[1]
-    meta_data[PdfField.DEPARTMENT]= ""
+    meta_data[PdfField.DEPARTMENT] = ""
     for word in line.split(" , ")[2].split()[2:]:
         meta_data[PdfField.DEPARTMENT] += word
-    while(True):
+    while True:
         line_index += 1
         line = sourcefile_lines[line_index]
-        if(line.find(",") < 0):
+        if line.find(",") < 0:
             meta_data[PdfField.DEPARTMENT] += line
         else:
             break
 
     meta_data[PdfField.UNP] = ""
-    while(True):
+    while True:
         line_index += 1
         line = sourcefile_lines[line_index]
-        if(line.find("UNP:")>=0):
+        if line.find("UNP:") >= 0:
             for word in line[line.find("UNP:") + 4:]:
-                meta_data[PdfField.UNP] += word 
-            break 
+                meta_data[PdfField.UNP] += word
+            break
     line_index += 1
     line = sourcefile_lines[line_index]
-    if(line.find("Sprawa:")>=0):
+    if line.find("Sprawa:") >= 0:
         meta_data[PdfField.CASE_TYPE] = ""
         for word in line[line.find("Sprawa:") + 7:]:
-                meta_data[PdfField.CASE_TYPE] += word 
+            meta_data[PdfField.CASE_TYPE] += word
         line_index += 1
-    while(True):
-        if(line.strip()==""):
+    while True:
+        if line.strip() == "":
             line_index += 1
             break
         line_index += 1
@@ -101,20 +104,23 @@ def extract_information(pdf_file_reader: PdfFileReader):
         meta_data[PdfField.RECEIVER_CITY] += word
 
     print(meta_data)
-    return meta_data 
+    return meta_data
+
 
 def parse_file(path: str) -> None:
     pdfFileReader: Optional[PdfFileReader] = open_file(path)
 
-    if (not is_pdf(pdfFileReader)):
+    if not is_pdf(pdfFileReader):
         print("Given file is not valid pdf file")
         return
-    
+
     return extract_information(pdfFileReader)
+
 
 def get_configuration(path: str) -> dict:
     with open(path, 'rb') as f:
         return safe_load(f)
+
 
 if __name__ == '__main__':
     path_to_pdf = 'send_hybrid_gov_01~.pdf'
