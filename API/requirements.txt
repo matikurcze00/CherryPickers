@@ -5,3 +5,4 @@ PyPDF2~=2.11.1
 docx2pdf~=0.1.8
 PyYAML~=6.0
 flask-cors~=3.0.10
+asn1crypto==1.5.1
