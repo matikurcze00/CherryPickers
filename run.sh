@@ -5,3 +5,8 @@ pip install --trusted-host pypi.python.org -r API/requirements.txt
 cd API
 python3 run.py
 cd ..
+
+# run frontend
+npm install -g npm
+cd GUI/frontend
+npm start
