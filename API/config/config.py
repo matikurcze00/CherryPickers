@@ -36,7 +36,7 @@ class ConfingAlgo:
     def to_dict(self) -> dict:
         return {
             "sender": self.sender,
-            "reciever": self.receiver,
+            "receiver": self.receiver,
             "service_type": self.service_type,
             "pdf_parameters": self.pdf_parameters
         }

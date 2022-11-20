@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from config import cf, cf_algo
 from validation import Validator
+from scraping import parse_file
 
 from flask import Flask, request, send_file, redirect
 from flask_cors import CORS
@@ -44,7 +45,7 @@ def post_file():
     file = request.files['file']
 
     valid = Validator(cf_algo.to_dict())
-    errors_dict = valid.validate(parsed_dict={})
+    errors_dict = valid.validate(parsed_dict=parse_file(file))
 
     pdf_file = PdfFileReader(file)
     pages = [pdf_file.getPage(page_num) for page_num in range(pdf_file.numPages)]

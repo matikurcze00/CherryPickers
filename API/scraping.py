@@ -1,4 +1,5 @@
 # extract_doc_info.py
+from werkzeug.datastructures import FileStorage
 
 # spacy, ner, hugging face
 
@@ -107,8 +108,8 @@ def extract_information(pdf_file_reader: PdfFileReader):
     return meta_data
 
 
-def parse_file(path: str) -> None:
-    pdfFileReader: Optional[PdfFileReader] = open_file(path)
+def parse_file(file: FileStorage) -> None:
+    pdfFileReader: Optional[PdfFileReader] = PdfFileReader(file)
 
     if not is_pdf(pdfFileReader):
         print("Given file is not valid pdf file")
@@ -129,7 +130,7 @@ if __name__ == '__main__':
     f = open(path_to_pdf, 'rb')
     pdfFileReader = PdfFileReader(f)
     page = pdfFileReader.getPage(0)
-    parsed_data = parse_file(path_to_pdf)
+    parsed_data = parse_file(pdfFileReader)
     print(f"Parsed data:\n {type(parsed_data)}")
 
     yaml_config = get_configuration(path_to_config)
