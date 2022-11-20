@@ -31,10 +31,10 @@ export const Property = (props) => {
           flexWrap: "wrap",
         }}
       >
-            {props.value === "incorrect" && <ErrorIcon />}
-            {props.value === "valid" && <CheckCircleOutlineIcon />}
-            {props.value === "modified" && <HelpOutlineIcon />}
-            <span style={{marginLeft: 10}}>{props.name + " " + props.value}</span>
+        {props.value === "incorrect" && <ErrorIcon />}
+        {props.value === "valid" && <CheckCircleOutlineIcon />}
+        {props.value === "modified" && <HelpOutlineIcon />}
+        <span style={{ marginLeft: 10 }}>{props.name + " " + props.value}</span>
       </div>
     </Item>
   );
