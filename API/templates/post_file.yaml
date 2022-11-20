@@ -23,6 +23,9 @@ responses:
         errors:
           type: object
           description: dict of errors after validation
+        parse_data:
+          type: object
+          description: dict of parse data
   400:
     $ref: '#/components/responses/400BadRequest'
   403:
