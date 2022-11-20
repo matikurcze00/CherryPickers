@@ -53,16 +53,22 @@ const fileTypes = [
 ];
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
-const onUpload = (file) => {
+const onUpload = (file, onSetProperties, onSetErrors) => {
   const formData = new FormData();
   formData.append("file", file);
-  console.log(file);
-  axios.post("http://localhost:3001/file", formData).then(function (response) {
-    console.log(response);
-  });
+  axios.post("http://127.0.0.1:5000/file", formData).then(function (response) {
+    onSetProperties(response.data.parse_data);
+    onSetErrors(response.data.errors);
+  }).catch(function (response) {
+    onSetErrors({})
+    onSetProperties({})
+  })
 };
 
+
+
 function Uploader(props) {
+  
   return (
     <div>
       <FileUploader
@@ -71,14 +77,14 @@ function Uploader(props) {
         style={{ outerHeight: "1000px" }}
         types={fileTypes}
         handleChange={(file) => {
-            AddFiles(props.files, file, props.setFiles);
+            AddFiles(props.files, file, props.setFiles, props.onSetProperties, props.onSetErrors);
         }}
       ></FileUploader>
     </div>
   );
 }
 
-export const AddFiles = (state, files, setFiles) => {
+export const AddFiles = (state, files, setFiles, onSetProperties, onSetErrors) => {
   let temp = [];
   console.log(state);
   console.log(files);
@@ -86,23 +92,21 @@ export const AddFiles = (state, files, setFiles) => {
   if(state === undefined)
     setFiles(files);
   else if (files[1] !== undefined) {
-    console.log("here");
     let i = 0;
     while (files[i] != undefined) {
       temp.push(files[i]);
+      onUpload(files[i], onSetProperties, onSetErrors)
       i++;
     }
     setFiles(state.concat(temp));
   } else {
-    console.log("there");
+    onUpload(files[0], onSetProperties, onSetErrors)
     setFiles(state.concat(files[0]));
   }
 };
 
 export const AddFiles2 = (state, files, setFiles) => {
     let temp = [];
-    console.log(state);
-    console.log(files);
   
     if(state === undefined)
       setFiles(files);

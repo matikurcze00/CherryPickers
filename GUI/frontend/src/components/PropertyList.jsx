@@ -14,10 +14,14 @@ export const PropertyList = (props) => {
     <Container maxWidth="sm" margin='5'>
       <Box margin='5'>
         <Stack spacing={1}>
-          {properties.map((element, i) => {
-            let name = Object.keys(element);
+            {Object.keys(props.properties).map((element, i) => {
             return (
-              <Property key={i} name={name} value={element[name]}></Property>
+              <Property key={i} name={element}></Property>
+            );
+          })}      
+            {Object.keys(props.errors).map((element, i) => {
+            return (
+              <Property key={i} name={element}></Property>
             );
           })}
         </Stack>

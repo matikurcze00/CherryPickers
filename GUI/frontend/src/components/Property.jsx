@@ -22,8 +22,8 @@ export const Property = (props) => {
           flexWrap: "wrap",
         }}
       >
-        {props.value === "incorrect" ? <ErrorOutlineIcon /> : <CheckCircleOutlineIcon />}
-        <span style={{ marginLeft: 10 }}>{props.name + " " + props.value}</span>
+        {props.isOk === false ? <ErrorOutlineIcon /> : <CheckCircleOutlineIcon />}
+        <span style={{ marginLeft: 10 }}>{props.name + " valid"}</span>
       </div>
     </Item>
   );

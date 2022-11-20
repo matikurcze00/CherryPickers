@@ -23,18 +23,16 @@ export const VerificationPage = () => {
   const [statuses, setStatuses] = useState(); //statuses of files uploaded
   const [recents, setRecents] = useState([]); //recents consisted of data saved and downloaded from api and deleted session files
   const [tabEnabled, setTabEnabled] = useState(true)
+  const [properties, setProperties] = useState({})
+  const [errors, setErrors] = useState({})
+
   const deleteFile = (e) => {
-    // if(recents !== undefined)
-    //   setRecents(recents.concat(files[e.key]));
-    // else
-    //   recents.push
     AddFiles2(recents, files[e.target.id], setRecents);
     setFiles(files.filter((element) => element !== files[e.target.id]));
   };
   let filesToShow = tabEnabled ? files : recents
-  const onShowProperty = () => {
-    console.log('mati debil')
-  }
+
+  
 
   return (
     <Grid container>
@@ -43,7 +41,7 @@ export const VerificationPage = () => {
           <BasicTabs setTabEnabled={setTabEnabled} tabEnabled={tabEnabled}></BasicTabs>
           {tabEnabled && 
           <Box margin={5} width="500">
-            <Uploader setFiles={setFiles} files={files}></Uploader>
+            <Uploader setFiles={setFiles} files={files} onSetProperties={setProperties} onSetErrors={setErrors}></Uploader>
           </Box>}
           <Box>
             <Stack
@@ -53,7 +51,7 @@ export const VerificationPage = () => {
             >
               {filesToShow.map((file) => {
                 return (
-                  <Item onClick={onShowProperty}>
+                  <Item >
                     {file.name}
                     {tabEnabled &&
                     <Button
@@ -74,7 +72,7 @@ export const VerificationPage = () => {
       </Container>
       <Container>
         <Grid item margin={5}>
-          <PropertyList></PropertyList>
+          <PropertyList properties={properties} errors={errors}></PropertyList>
         </Grid>
       </Container>
     </Grid>
