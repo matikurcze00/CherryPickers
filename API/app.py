@@ -44,8 +44,11 @@ def post_file():
 
     file = request.files['file']
 
-    valid = Validator(cf_algo.to_dict())
-    errors_dict = valid.validate(parsed_dict=parse_file(file))
+    try:
+        valid = Validator(cf_algo.to_dict())
+        errors_dict = valid.validate(parsed_dict=parse_file(file))
+    except Exception as e:
+        return f"Fail to validate file Error: {str(e)}", 500
 
     pdf_file = PdfFileReader(file)
     pages = [pdf_file.getPage(page_num) for page_num in range(pdf_file.numPages)]
