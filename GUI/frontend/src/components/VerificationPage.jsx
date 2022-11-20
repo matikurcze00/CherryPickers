@@ -13,17 +13,21 @@ import {
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import PropertyList from "./PropertyList.jsx";
-import {AddFiles} from "./Uploader"
+import {AddFiles, AddFiles2} from "./Uploader"
 
 export const VerificationPage = () => {
   const [files, setFiles] = useState([]); //major data - uploaded and sent files
   const [pdfChanges, setPdfChanges] = useState([]); //comments to changes done in backend
   const [loggedIn, setLoggedIn] = useState(); //login flag (0 not logged, 1 simple user, 2 admin)
   const [statuses, setStatuses] = useState(); //statuses of files uploaded
-  const [recents, setRecents] = useState(); //recents consisted of data saved and downloaded from api and deleted session files
+  const [recents, setRecents] = useState([]); //recents consisted of data saved and downloaded from api and deleted session files
 
   const deleteFile = (e) => {
-    AddFiles(recents, files[e.target.id], setRecents);
+    // if(recents !== undefined)
+    //   setRecents(recents.concat(files[e.key]));
+    // else
+    //   recents.push
+    AddFiles2(recents, files[e.target.id], setRecents);
     setFiles(files.filter((element) => element !== files[e.target.id]));
   };
 

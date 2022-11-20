@@ -71,9 +71,7 @@ function Uploader(props) {
         style={{ outerHeight: "1000px" }}
         types={fileTypes}
         handleChange={(file) => {
-          props.files == undefined
-            ? props.setFiles(file)
-            : AddFiles(props.files, file, props.setFiles);
+            AddFiles(props.files, file, props.setFiles);
         }}
       ></FileUploader>
     </div>
@@ -82,7 +80,13 @@ function Uploader(props) {
 
 export const AddFiles = (state, files, setFiles) => {
   let temp = [];
-  if (files[1] !== undefined) {
+  console.log(state);
+  console.log(files);
+
+  if(state === undefined)
+    setFiles(files);
+  else if (files[1] !== undefined) {
+    console.log("here");
     let i = 0;
     while (files[i] != undefined) {
       temp.push(files[i]);
@@ -90,8 +94,30 @@ export const AddFiles = (state, files, setFiles) => {
     }
     setFiles(state.concat(temp));
   } else {
+    console.log("there");
     setFiles(state.concat(files[0]));
   }
 };
+
+export const AddFiles2 = (state, files, setFiles) => {
+    let temp = [];
+    console.log(state);
+    console.log(files);
+  
+    if(state === undefined)
+      setFiles(files);
+    else if (files[1] !== undefined) {
+      console.log("here");
+      let i = 0;
+      while (files[i] != undefined) {
+        temp.push(files[i]);
+        i++;
+      }
+      setFiles(state.concat(temp));
+    } else {
+      console.log("there");
+      setFiles(state.concat(files));
+    }
+  };
 
 export default Uploader;
