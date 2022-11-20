@@ -1,12 +1,15 @@
 import codecs
 from uuid import uuid4
 
+from werkzeug.datastructures import FileStorage
+
 from config import cf, cf_algo
 
-from flask import Flask, request, send_file, redirect
+from flask import Flask, request, send_file, redirect, Response
 from flasgger import Swagger
 from flasgger import swag_from
 from PyPDF2 import PdfFileReader, PdfWriter
+# from docx2pdf import convert
 
 app = Flask(__name__)
 
@@ -19,6 +22,13 @@ def encode_file_bytes(payload: bytes) -> str:
 
 def decode_file_string(payload: str) -> bytes:
     return codecs.decode(codecs.encode(payload, 'utf-8'), 'base64')
+
+
+# def covert_file_if_not_pdf(file: FileStorage) -> FileStorage:
+#     if file.filename.endswith(".pdf"):
+#         return file
+#     elif file.filename.endswith(".docx"):
+#         return convert(file)
 
 
 @app.route('/', methods=['GET'])
@@ -50,10 +60,13 @@ def post_file():
     with open(f"pdfs/{uuid}.pdf", "wb") as f:
         writer.write(f)
 
-    return {
+    resp = Response({
         "info": f"{file.filename} uploaded successfully",
         "uuid": f"{str(uuid)}"
-    }
+    })
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+
+    return resp
 
 
 @app.route('/file/<string:uuid>', methods=['GET'])
