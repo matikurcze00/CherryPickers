@@ -33,8 +33,6 @@ def covert_file_if_not_pdf(file: FileStorage) -> FileStorage:
         return convert(file)
 
 
-
-
 @app.route('/', methods=['GET'])
 def apidocs():  # put application's code here
     return redirect('/apidocs')
