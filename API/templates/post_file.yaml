@@ -20,6 +20,9 @@ responses:
         info:
           type: string
           description: info of success
+        errors:
+          type: object
+          description: dict of errors after validation
   400:
     $ref: '#/components/responses/400BadRequest'
   403:

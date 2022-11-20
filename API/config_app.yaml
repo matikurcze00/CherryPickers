@@ -1,3 +1,8 @@
 api:
   ip_address: 0.0.0.0
   port: 5000
+redis:
+  enable: false
+  host: localhost
+  port: 6379
+  expiration_time: 60

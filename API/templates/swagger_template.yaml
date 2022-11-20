@@ -2,7 +2,7 @@
 openapi: 2.0.0
 info:
   version: 0.3.0
-  title: Cherry Pickers
+  title: Cherry Pickers API
 
 components:
   schemas:

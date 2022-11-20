@@ -2,6 +2,7 @@ import codecs
 from uuid import uuid4
 
 from config import cf, cf_algo
+from validation import Validator
 
 from flask import Flask, request, send_file, redirect
 from flask_cors import CORS
@@ -28,10 +29,10 @@ def apidocs():  # put application's code here
     return redirect('/apidocs')
 
 
-@app.route('/hello_world', methods=['GET'])
+@app.route('/hello_hackyeah', methods=['GET'])
 @swag_from('templates/hello_world.yaml')
 def hello_world():  # put application's code here
-    return 'Hello World!'
+    return 'Hello HackYeah!!!'
 
 
 @app.route('/file', methods=['POST'])
@@ -41,6 +42,9 @@ def post_file():
         return "Request missing required field or malformed", 400
 
     file = request.files['file']
+
+    valid = Validator(cf_algo.to_dict())
+    errors_dict = valid.validate(parsed_dict={})
 
     pdf_file = PdfFileReader(file)
     pages = [pdf_file.getPage(page_num) for page_num in range(pdf_file.numPages)]
@@ -53,7 +57,8 @@ def post_file():
 
     return {
         "info": f"{file.filename} uploaded successfully",
-        "uuid": f"{str(uuid)}"
+        "uuid": f"{str(uuid)}",
+        "errors": errors_dict
     }
 
 
