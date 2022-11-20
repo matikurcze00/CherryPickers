@@ -1,11 +1,8 @@
-import ErrorIcon from "@mui/icons-material/Error";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 
 export const Property = (props) => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -31,7 +28,7 @@ export const Property = (props) => {
           flexWrap: "wrap",
         }}
       >
-            {props.value === "incorrect" && <ErrorIcon />}
+            {props.value === "incorrect" && <ErrorOutlineIcon />}
             {props.value === "valid" && <CheckCircleOutlineIcon />}
             {props.value === "modified" && <HelpOutlineIcon />}
             <span style={{marginLeft: 10}}>{props.name + " " + props.value}</span>
