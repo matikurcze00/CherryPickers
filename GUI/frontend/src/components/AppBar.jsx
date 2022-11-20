@@ -8,8 +8,19 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/material/menu";
 import icon from "../Logo_Ministerstwa_Finansów.svg.png";
 import "./css/AppBar.css";
+import { LoginComponent } from "./LoginComponent";
+import {useState} from 'react'
 
 function ButtonAppBar() {
+
+  const [loggingIn, setLoggingIn] = useState(false);
+
+  const onButtonClick = (e) =>
+  {
+    loggingIn ? e.target.color = 'error' : e.target.color = 'inherit';
+    setLoggingIn(!loggingIn);
+  }
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -30,16 +41,19 @@ function ButtonAppBar() {
             >
               SendHybrid
             </Typography>
-            <Box>
+              <LoginComponent logged={loggingIn}>
+  
+              </LoginComponent>
+            <Box sx={{ flexGrow: 0.1 }}>
               <Grid spacing={2} container>
-                <Grid xs="9" item>
-                  <Button disabled variant="outlined" color="secondary">
-                    Export Configuration
+                <Grid xs="4" item>
+                  <Button onClick={onButtonClick} variant="outlined" color="inherit">
+                    Logging in
                   </Button>
                 </Grid>
-                <Grid xs="3" item>
-                  <Button variant="outlined" color="inherit">
-                    Login
+                <Grid xs="8" item>
+                  <Button disabled variant="outlined" color="secondary">
+                    Export Configuration
                   </Button>
                 </Grid>
               </Grid>
