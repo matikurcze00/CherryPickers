@@ -1,11 +1,11 @@
-Hello world
+Say Hi :3
 ---
 tags:
-- Greetings
+- Greetings for Mentors
 
 responses:
   200:
-    description: hello world
+    description: Hello HackYeah!!!
   400:
     $ref: '#/components/responses/400BadRequest'
   403:

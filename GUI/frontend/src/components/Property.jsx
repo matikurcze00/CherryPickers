@@ -1,10 +1,11 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 
 export const Property = (props) => {
+  
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -28,10 +29,10 @@ export const Property = (props) => {
           flexWrap: "wrap",
         }}
       >
-            {props.value === "incorrect" && <ErrorOutlineIcon />}
-            {props.value === "valid" && <CheckCircleOutlineIcon />}
-            {props.value === "modified" && <HelpOutlineIcon />}
-            <span style={{marginLeft: 10}}>{props.name + " " + props.value}</span>
+        {props.value === "incorrect" && <ErrorOutlineIcon />}
+        {props.value === "valid" && <CheckCircleOutlineIcon />}
+        {props.value === "modified" && <HelpOutlineIcon />}
+        <span style={{ marginLeft: 10 }}>{props.name + " " + props.value}</span>
       </div>
     </Item>
   );

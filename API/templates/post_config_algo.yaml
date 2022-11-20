@@ -1,7 +1,14 @@
-GET algo config
+POST config to algo
 ---
 tags:
 - Puh config
+parameters:
+  - name: file
+    in: body
+    description: config algo dict
+    required: true
+    schema:
+      $ref: '#/components/schemas/algo_config'
 
 responses:
   200:

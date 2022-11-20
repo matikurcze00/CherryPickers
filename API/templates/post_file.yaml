@@ -19,7 +19,10 @@ responses:
           description: uuid of file to download
         info:
           type: string
-          description: info of succes
+          description: info of success
+        errors:
+          type: object
+          description: dict of errors after validation
   400:
     $ref: '#/components/responses/400BadRequest'
   403:

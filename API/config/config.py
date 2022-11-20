@@ -7,6 +7,7 @@ class Confing:
     def __init__(self):
         self.ip_address: Optional[str] = None
         self.port: Optional[str] = None
+        self.redis: Optional[dict] = None
 
     def load_config(self, path_to_config: str):
         with open(path_to_config) as f:
@@ -14,6 +15,7 @@ class Confing:
             api_conf = config_d["api"]
             self.port = api_conf.get("port") or None
             self.ip_address = api_conf.get("ip_address") or None
+            self.redis = config_d["redis"]
 
 
 class ConfingAlgo:
@@ -34,10 +36,16 @@ class ConfingAlgo:
     def to_dict(self) -> dict:
         return {
             "sender": self.sender,
-            "reciever": self.receiver,
+            "receiver": self.receiver,
             "service_type": self.service_type,
             "pdf_parameters": self.pdf_parameters
         }
+
+    def update(self, config_dict: dict):
+        self.receiver = config_dict["receiver"]
+        self.sender = config_dict["sender"]
+        self.service_type = config_dict["service_type"]
+        self.pdf_parameters = config_dict["pdf_parameters"]
 
 
 cf = Confing()
@@ -45,4 +53,4 @@ cf_algo = ConfingAlgo()
 
 if __name__ == '__main__':
     conf_algo = ConfingAlgo()
-    conf_algo.load_config("config.yaml")
+    conf_algo.load_config("config_app.yaml")

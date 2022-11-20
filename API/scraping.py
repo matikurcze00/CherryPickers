@@ -143,6 +143,9 @@ if __name__ == '__main__':
     path_to_pdf = 'send_hybrid_gov_01~.pdf'
     path_to_nothing = 'send_hybrid_gov_012~.pdf'
     path_to_config = 'config_algo.yaml'
+    f = open(path_to_pdf, 'rb')
+    pdfFileReader = PdfFileReader(f)
+    page = pdfFileReader.getPage(0)
     
     #kod funkcji
     yaml_config = get_configuration(path_to_config)
@@ -150,7 +153,7 @@ if __name__ == '__main__':
     errors = dict
     if (path_to_pdf!=validator.validateName(path_to_pdf)):
         path_to_pdf = change_pdf_name(path_to_pdf,validator.validateName(path_to_pdf))
-    parsed_data = parse_file(path_to_pdf)
+    parsed_data = parse_file(f)
     parsed_data[PdfField.SIGNATURE] = get_signature(path_to_pdf)
     strip_values(parsed_data)
     
