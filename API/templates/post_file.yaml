@@ -12,8 +12,14 @@ parameters:
 responses:
   200:
     schema:
-      type: string
-      example: "File: {file_name} added successfully"
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: uuid of file to download
+        info:
+          type: string
+          description: info of succes
   400:
     $ref: '#/components/responses/400BadRequest'
   403:

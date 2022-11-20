@@ -1,0 +1,6 @@
+Werkzeug~=2.2.2
+Flask~=2.2.2
+flasgger~=0.9.5
+PyPDF2~=2.11.1
+docx2pdf~=0.1.8
+PyYAML~=6.0
