@@ -31,7 +31,7 @@ receiver:
   zip :
     min_char : 0
     max_char : 20
-    letters_allowed : true
+    letters_allowed : false
     numbers_allowed : true
     allowed_characters :
       - "-"
