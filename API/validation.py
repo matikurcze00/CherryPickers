@@ -24,8 +24,6 @@ class Validator:
         self.config = config
 
     def _validate(self, value, constraints, key):
-        # print(constraints)
-        # print(value)
         missing_constraints = dict()
 
         if ("min_char" in constraints):
@@ -48,7 +46,7 @@ class Validator:
 
         return missing_constraints
 
-    def validate(self, parsed_dict) -> dict:
+    def validateMetaData(self, parsed_dict) -> dict:
         errors = dict()
         for key, value in parsed_dict.items():
             if key == PdfField.SENDER_NAME:
@@ -58,8 +56,6 @@ class Validator:
             elif key == PdfField.RECEIVER_STREET:
                 errors.update(self._validate(value, self.config["receiver"]["street"], "receiver street"))
             elif key == PdfField.SENDER_ZIP_CODE:
-                print(self.config["sender"]["zip"])
-                print(value)
                 errors.update(self._validate(value, self.config["sender"]["zip"], "sender zip code"))
             elif key == PdfField.RECEIVER_ZIP_CODE:
                 errors.update(self._validate(value, self.config["receiver"]["zip"], "receiver zip code"))       
@@ -69,6 +65,22 @@ class Validator:
                 errors.update(self._validate(value, self.config["sender"]["city"], "sender city"))
             elif key == PdfField.RECEIVER_CITY:
                 errors.update(self._validate(value, self.config["receiver"]["city"], "receiver city"))
+            elif key == PdfField.SIGNATURE:
+                errors.update(self._validate(value, self.config["sender"]["name"], "sender name"))
         print(errors)
         return errors
 
+    def validateName(self, name) -> str:
+        if (len(name)>self.config["pdf_parameters"]["name"]["max_length"]):
+            name=name[0:self.config["pdf_parameters"]["name"]["max_length"]-4]+".pdf"
+            if(name.find("..")):
+                name.replace("..", ".")
+
+        for sign in self.config["pdf_parameters"]["name"]["not_allowed_characters"]:
+            name.replace(sign,"")
+            
+        if(self.config["pdf_parameters"]["name"]["no_spaces_around"]):
+            name = name.replace(".pdf","")
+            name = name.strip()
+            name+=".pdf"
+        return name
