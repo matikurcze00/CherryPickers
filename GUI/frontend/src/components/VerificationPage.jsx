@@ -21,26 +21,27 @@ export const VerificationPage = () => {
   return (
     <Grid container>
     <Container maxWidth="sm">
-      <Grid item>
-      <Box margin={5} width="500">
-        <Uploader setFiles={setFiles} files={files}></Uploader>
-      </Box>
-      <Box margin={3}>
-        <Stack alignItems="center"
-          direction="column"
-          divider={<Divider orientation="vertical" flexItem />}
-          spacing={2}
-        >
-          {files.map((file) => { return <Item>{file.name}</Item>})}
-        </Stack>
-      </Box>
+      <Grid  item xs="12">
+        <Box margin={5} width="500">
+          <Uploader setFiles={setFiles} files={files}></Uploader>
+        </Box>
+        <Box>
+          <Stack alignItems="center"
+            divider={<Divider orientation="vertical" flexItem />}
+            spacing={1}
+          >
+            {files.map((file) => { return <Item>{file.name}</Item>})}
+          </Stack>
+        </Box>
       </Grid>
     </Container>
-      <Grid item>
+    <Container >
+      <Grid  xs="12" item margin={5}>
         <PropertyList>
 
         </PropertyList>
       </Grid>
+      </Container>
     </Grid>
 
   );
